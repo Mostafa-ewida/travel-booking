@@ -1,0 +1,40 @@
+# Python and build artifacts
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.python-version
+.env
+.venv
+venv/
+
+# Dependency directories
+env/
+venv/
+ENV/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Test and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+tests/
+
+# Build and distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Misc
+.DS_Store
