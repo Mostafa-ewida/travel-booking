@@ -1,6 +1,12 @@
-import { Card, CardContent, Typography, Button, Box } from '@mui/material';
+
+import { CardContent, Typography, Button, Box, Chip } from '@mui/material';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import EventIcon from '@mui/icons-material/Event';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { formatDate, formatCurrency } from '../../utils/formatters';
 import { cancelBooking } from '../../api/bookings';
+import '../../styles/theme-pro.css';
 
 const BookingCard = ({ booking, showNotification, onCancel }) => {
   const handleCancel = async () => {
@@ -14,33 +20,49 @@ const BookingCard = ({ booking, showNotification, onCancel }) => {
   };
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Box className="result-card-pro" sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 220 }}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          {booking.flight.destination}
-        </Typography>
-        <Typography color="text.secondary">
-          {formatDate(booking.travelDate)}
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 1 }}>
-          Status: {booking.status}
-        </Typography>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          {formatCurrency(booking.totalPrice)}
-        </Typography>
-        <Box sx={{ mt: 2 }}>
-          <Button
-            variant="outlined"
-            color="error"
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+          <FlightTakeoffIcon color="primary" sx={{ mr: 1 }} />
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            {booking.flight.destination}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+          <EventIcon color="action" sx={{ mr: 1 }} />
+          <Typography color="text.secondary" variant="body2">
+            {formatDate(booking.travelDate)}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+          <AttachMoneyIcon color="success" sx={{ mr: 1 }} />
+          <Typography variant="body1" sx={{ fontWeight: 600 }}>
+            {formatCurrency(booking.totalPrice)}
+          </Typography>
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+          <Chip
+            label={booking.status}
+            color={booking.status === 'CANCELLED' ? 'error' : booking.status === 'CONFIRMED' ? 'success' : 'warning'}
             size="small"
-            onClick={handleCancel}
-            disabled={booking.status === 'CANCELLED'}
-          >
-            {booking.status === 'CANCELLED' ? 'Cancelled' : 'Cancel'}
-          </Button>
+            icon={booking.status === 'CANCELLED' ? <CancelIcon /> : undefined}
+            sx={{ fontWeight: 600, textTransform: 'capitalize' }}
+          />
         </Box>
       </CardContent>
-    </Card>
+      <Box sx={{ px: 2, pb: 2, display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          variant="outlined"
+          color="error"
+          size="small"
+          onClick={handleCancel}
+          disabled={booking.status === 'CANCELLED'}
+          sx={{ fontWeight: 600, borderRadius: 2 }}
+        >
+          {booking.status === 'CANCELLED' ? 'Cancelled' : 'Cancel'}
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

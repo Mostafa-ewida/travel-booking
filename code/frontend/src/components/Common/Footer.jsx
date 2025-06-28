@@ -8,13 +8,14 @@ const Footer = () => {
         py: 3, 
         px: 2, 
         mt: 'auto',
-        backgroundColor: (theme) => 
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800],
+        background: '#f1f5f9',
+        color: '#64748b',
+        textAlign: 'center',
+        fontSize: '1rem',
+        borderTop: '1px solid #e0e7ef',
       }}
     >
-      <Typography variant="body2" color="text.secondary" align="center">
+      <Typography variant="body2" color="inherit" align="center">
         © {new Date().getFullYear()} Travel Booking System
       </Typography>
     </Box>

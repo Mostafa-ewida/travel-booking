@@ -12,7 +12,7 @@ const Header = ({ showNotification }) => {
   };
 
   return (
-    <AppBar position="static" elevation={0} sx={{ backgroundColor: 'primary.main' }}>
+    <AppBar position="static" elevation={2} sx={{ background: 'linear-gradient(90deg, #6366f1 0%, #60a5fa 100%)', color: '#fff', boxShadow: '0 2px 12px 0 rgba(99, 102, 241, 0.08)' }}>
       <Toolbar>
         <Typography 
           variant="h6" 
@@ -22,36 +22,35 @@ const Header = ({ showNotification }) => {
             flexGrow: 1, 
             textDecoration: 'none',
             color: 'inherit',
-            fontWeight: 'bold'
+            fontWeight: 700,
+            letterSpacing: '-1px'
           }}
         >
           Travel Booking
         </Typography>
-        
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Button 
             color="inherit" 
             component={Link} 
             to="/search"
-            sx={{ textTransform: 'none' }}
+            sx={{ textTransform: 'none', fontWeight: 600 }}
           >
             Search Flights
           </Button>
-          
           {isAuthenticated() ? (
             <>
               <Button 
                 color="inherit" 
                 component={Link} 
                 to="/bookings"
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: 'none', fontWeight: 600 }}
               >
                 My Bookings
               </Button>
               <Button 
                 color="inherit" 
                 onClick={handleLogout}
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: 'none', fontWeight: 600 }}
               >
                 Logout
               </Button>
@@ -62,7 +61,7 @@ const Header = ({ showNotification }) => {
                 color="inherit" 
                 component={Link} 
                 to="/login"
-                sx={{ textTransform: 'none' }}
+                sx={{ textTransform: 'none', fontWeight: 600 }}
               >
                 Login
               </Button>
@@ -70,13 +69,7 @@ const Header = ({ showNotification }) => {
                 color="inherit" 
                 component={Link} 
                 to="/register"
-                sx={{ 
-                  textTransform: 'none',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  '&:hover': {
-                    backgroundColor: 'rgba(255,255,255,0.2)'
-                  }
-                }}
+                sx={{ textTransform: 'none', fontWeight: 600, backgroundColor: 'rgba(255,255,255,0.1)', '&:hover': { backgroundColor: 'rgba(255,255,255,0.2)' } }}
               >
                 Register
               </Button>

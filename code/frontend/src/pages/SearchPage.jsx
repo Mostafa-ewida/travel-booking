@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Container, Box } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
 import Filters from '../components/Search/Filters';
 import Results from '../components/Search/Results';
 import { searchFlights } from '../api/search';
+import '../styles/theme-pro.css';
 
 const SearchPage = ({ showNotification }) => {
   const [flights, setFlights] = useState([]);
@@ -22,10 +23,15 @@ const SearchPage = ({ showNotification }) => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 4 }}>
-        <Filters onSubmit={handleSearch} loading={loading} />
+      <Box className="card-pro" boxShadow={3}>
+        <Typography className="search-title">Find Your Next Flight</Typography>
+        <Box className="search-form-pro">
+          <Filters onSubmit={handleSearch} loading={loading} />
+        </Box>
       </Box>
-      <Results results={flights} loading={loading} />
+      <Box className="card-pro" boxShadow={2}>
+        <Results results={flights} loading={loading} />
+      </Box>
     </Container>
   );
 };
