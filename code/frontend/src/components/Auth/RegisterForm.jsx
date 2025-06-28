@@ -24,7 +24,7 @@ const RegisterForm = ({ onSuccess, showNotification }) => {
         }
       }}
     >
-      {({ handleSubmit, isSubmitting }) => (
+      {({ handleSubmit, isSubmitting, values, handleChange, handleBlur, touched, errors }) => (
         <form onSubmit={handleSubmit}>
           <Box mb={2}>
             <TextField
@@ -32,6 +32,11 @@ const RegisterForm = ({ onSuccess, showNotification }) => {
               label="Username"
               name="username"
               variant="outlined"
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.username && Boolean(errors.username)}
+              helperText={touched.username && errors.username}
             />
           </Box>
           <Box mb={2}>
@@ -41,6 +46,11 @@ const RegisterForm = ({ onSuccess, showNotification }) => {
               name="email"
               type="email"
               variant="outlined"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
             />
           </Box>
           <Box mb={2}>
@@ -50,6 +60,11 @@ const RegisterForm = ({ onSuccess, showNotification }) => {
               name="password"
               type="password"
               variant="outlined"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
             />
           </Box>
           <Button

@@ -7,10 +7,11 @@ from pydantic import BaseModel, Field, EmailStr
 from config import (minio_client, keycloak_client, mongo_client, redis_client, rabbitmq_client)
 from database_init import initialize_database
 from health import router as health_router
-
-
+from elasticapm.contrib.starlette import ElasticAPM, make_apm_client
 from config import init_keycloak
-
+from starlette.middleware import Middleware
+from starlette_context.middleware import ContextMiddleware
+from starlette_context.plugins.request_id import RequestIdPlugin
 
 
 
@@ -19,6 +20,22 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # FastAPI app setup with metadata for Swagger
+
+
+# First create the middleware instances
+middleware = [
+    Middleware(
+        ContextMiddleware,
+        plugins=(RequestIdPlugin(),)
+    ),
+    # Add Correlation ID middleware if needed
+    # Middleware(
+    #    CorrelationIdMiddleware,
+    #    header_name='X-Request-ID'
+    # )
+]
+
+# Then create your FastAPI app with both metadata and middleware
 app = FastAPI(
     title="Travel Booking API",
     description="""A comprehensive API for travel bookings including flights, 
@@ -60,8 +77,21 @@ app = FastAPI(
             "name": "Users",
             "description": "User account management"
         }
-    ]
+    ],
+    middleware=middleware  # Add middleware configuration here
 )
+
+apm_config = {
+    'SERVICE_NAME': 'travel-booking-api',
+    'SERVER_URL': os.getenv('APM_SERVER_URL', 'http://apm-server:8200'),
+    'SECRET_TOKEN': os.getenv('APM_SECRET_TOKEN', ''),
+    'ENVIRONMENT': os.getenv('ENVIRONMENT', 'development'),
+    'CAPTURE_BODY': 'all',
+    'TRANSACTION_SAMPLE_RATE': 1.0
+}
+
+apm = make_apm_client(apm_config)
+app.add_middleware(ElasticAPM, client=apm)
 
 app.include_router(health_router)
 

@@ -14,6 +14,7 @@ import BookingPage from './pages/Bookings/BookingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ProtectedRoute from './components/Common/ProtectedRoute';
 import Notification from './components/Common/Notification';
+import LocalizationProviderWrapper from './components/Common/LocalizationProviderWrapper';
 
 function App() {
   const [notification, setNotification] = useState({
@@ -33,41 +34,43 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="app">
-        <Header showNotification={showNotification} />
-        <Notification 
-          open={notification.open}
-          message={notification.message}
-          severity={notification.severity}
-          onClose={handleClose}
-        />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage showNotification={showNotification} />} />
-            <Route path="/login" element={<LoginPage showNotification={showNotification} />} />
-            <Route path="/register" element={<RegisterPage showNotification={showNotification} />} />
-            <Route path="/search" element={<SearchPage showNotification={showNotification} />} />
-            <Route
-              path="/bookings"
-              element={
-                <ProtectedRoute>
-                  <MyBookings showNotification={showNotification} />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/bookings/new"
-              element={
-                <ProtectedRoute>
-                  <BookingPage showNotification={showNotification} />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <LocalizationProviderWrapper>
+        <div className="app">
+          <Header showNotification={showNotification} />
+          <Notification 
+            open={notification.open}
+            message={notification.message}
+            severity={notification.severity}
+            onClose={handleClose}
+          />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage showNotification={showNotification} />} />
+              <Route path="/login" element={<LoginPage showNotification={showNotification} />} />
+              <Route path="/register" element={<RegisterPage showNotification={showNotification} />} />
+              <Route path="/search" element={<SearchPage showNotification={showNotification} />} />
+              <Route
+                path="/bookings"
+                element={
+                  <ProtectedRoute>
+                    <MyBookings showNotification={showNotification} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/bookings/new"
+                element={
+                  <ProtectedRoute>
+                    <BookingPage showNotification={showNotification} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </LocalizationProviderWrapper>
     </ThemeProvider>
   );
 }

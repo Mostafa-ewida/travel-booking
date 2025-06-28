@@ -23,9 +23,9 @@ const SearchPage = ({ showNotification }) => {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 4 }}>
-        <Filters onSearch={handleSearch} loading={loading} />
+        <Filters onSubmit={handleSearch} loading={loading} />
       </Box>
-      <Results flights={flights} loading={loading} />
+      <Results results={flights} loading={loading} />
     </Container>
   );
 };

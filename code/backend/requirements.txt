@@ -25,3 +25,7 @@ elastic-apm==6.23.0
 
 pydantic[email]
 python-multipart
+
+elastic-apm
+
+starlette-context
