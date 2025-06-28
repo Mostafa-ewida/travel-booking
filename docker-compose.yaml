@@ -10,7 +10,7 @@ services:
       - MONGO_URI=mongodb://lclr_user:1th4ok1ymfurQaM9@mongo:27017/lclr_db?authSource=lclr_db
       - REDIS_URL=redis://:hgdfwegf67435jsdbjkTY@redis:6379
       - RABBITMQ_URL=amqp://bugs-bunny:sdfjgh45iotgdfjk456@rabbitmq:5672
-      # - KEYCLOAK_URL=http://keycloak:8080
+       - KEYCLOAK_URL=http://keycloak:8080
       - KEYCLOAK_ADMIN=mostafa
       - KEYCLOAK_ADMIN_PASSWORD=7eg35sJFHE366dgwfIQueuiKDJ837473KSOWEIhffhrWDbdjh
       # - KEYCLOAK_CLIENT_ID=travel-api
