@@ -4,7 +4,7 @@ from config import (
     mongo_client,
     redis_client,
     minio_client,
-    keycloak_openid,
+    keycloak_admin,
     rabbitmq_channel
 )
 
@@ -45,7 +45,7 @@ async def check_health():
 
     try:
         # Check Keycloak
-        keycloak_openid.well_know()
+        keycloak_admin.get_realms()
     except Exception as e:
         status["keycloak"] = f"unhealthy: {str(e)}"
         status["status"] = "degraded"

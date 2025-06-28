@@ -4,16 +4,13 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, status, Depends, Security
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from pydantic import BaseModel, Field, EmailStr
-from config import (
-    minio_client,
-    keycloak_client,
-    mongo_client,
-    redis_client,
-    rabbitmq_client
-)
-
+from config import (minio_client, keycloak_client, mongo_client, redis_client, rabbitmq_client)
 from database_init import initialize_database
 from health import router as health_router
+
+
+from config import init_keycloak
+
 
 
 
@@ -354,13 +351,12 @@ async def create_booking(
             len(receipt_content)
         )
 
-        # Send notification
+            # Send notification
         rabbitmq_client.send_notification(
             current_user["sub"],
             "Booking confirmed",
             f"Your booking {booking_data['id']} has been confirmed"
         )
-
         return booking_data
 
     except Exception as e:
@@ -447,8 +443,7 @@ async def get_current_user_details(current_user: dict = Security(get_current_use
 
 
 if __name__ == "__main__":
-
-print("🚀 Starting database initialization...")
+    print("🚀 Starting database initialization...")
     
     # You can either pass the URI directly or let it be read from environment
     success = initialize_database()  # Will automatically use MONGODB_URI from env
@@ -457,7 +452,6 @@ print("🚀 Starting database initialization...")
         print("✅ Database initialized successfully with dummy data!")
     else:
         print("❌ Failed to initialize database")
-
 
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)

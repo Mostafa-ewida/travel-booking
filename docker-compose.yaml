@@ -1,19 +1,22 @@
-version: '3.8'
-
 services:
   backend:
+    build:
+      context: ./code/backend
+      dockerfile: Dockerfile
     image: mostafaewida/fixed_backend
     ports:
       - "8000:8000"
     environment:
-      - MONGODB_URI=mongodb://lclr_user:1th4ok1ymfurQaM9@backend-database-primary:27017/lclr_db
+      - MONGO_URI=mongodb://lclr_user:1th4ok1ymfurQaM9@mongo:27017/lclr_db?authSource=lclr_db
       - REDIS_URL=redis://:hgdfwegf67435jsdbjkTY@redis:6379
       - RABBITMQ_URL=amqp://bugs-bunny:sdfjgh45iotgdfjk456@rabbitmq:5672
-      - KEYCLOAK_URL=http://keycloak:8080
-      - KEYCLOAK_ADMIN_USER=admin
+      # - KEYCLOAK_URL=http://keycloak:8080
+      - KEYCLOAK_ADMIN=mostafa
       - KEYCLOAK_ADMIN_PASSWORD=7eg35sJFHE366dgwfIQueuiKDJ837473KSOWEIhffhrWDbdjh
-      - KEYCLOAK_CLIENT_ID=travel-api
-      - KEYCLOAK_REALM=travel-realm
+      # - KEYCLOAK_CLIENT_ID=travel-api
+      # - KEYCLOAK_REALM=travel-realm
+      # - KEYCLOAK_CLIENT_ID=travel-api
+      # - KEYCLOAK_CLIENT_SECRET=your-strong-secret-here
       - MINIO_ENDPOINT=minio:9000
       - MINIO_ACCESS_KEY=admin
       - MINIO_SECRET_KEY=minio-root
@@ -23,7 +26,8 @@ services:
       - rabbitmq
       - keycloak
       - minio
-      - apm-server
+      # - apm-server
+      - mongo
 
   frontend:
     image: mostafaewida/fixed_frontend  
@@ -36,6 +40,19 @@ services:
       - REACT_APP_KEYCLOAK_CLIENT_ID=travel-api
     depends_on:
       - backend
+
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpass
+    volumes:
+      - mongo_data:/data/db
+      - ./init-db.js:/docker-entrypoint-initdb.d/init.js
 
   redis:
     image: redis:7-alpine
@@ -56,10 +73,20 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   keycloak:
     image: quay.io/keycloak/keycloak:21.1
+    command: start-dev 
     environment:
-      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN: mostafa
       KEYCLOAK_ADMIN_PASSWORD: 7eg35sJFHE366dgwfIQueuiKDJ837473KSOWEIhffhrWDbdjh
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
@@ -69,15 +96,6 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
-
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
   minio:
     image: minio/minio
@@ -91,24 +109,24 @@ services:
     volumes:
       - minio_data:/data
 
-  apm-server:
-    image: docker.elastic.co/apm/apm-server:8.9.0
-    ports:
-      - "8200:8200"
-    environment:
-      - output.elasticsearch.hosts=["elasticsearch:9200"]
-    depends_on:
-      - elasticsearch
+  # apm-server:
+  #   image: docker.elastic.co/apm/apm-server:8.9.0
+  #   ports:
+  #     - "8200:8200"
+  #   environment:
+  #     - output.elasticsearch.hosts=["elasticsearch:9200"]
+  #   depends_on:
+  #     - elasticsearch
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-    volumes:
-      - es_data:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
+  #   environment:
+  #     - discovery.type=single-node
+  #     - xpack.security.enabled=false
+  #   volumes:
+  #     - es_data:/usr/share/elasticsearch/data
+  #   ports:
+  #     - "9200:9200"
 
 volumes:
   redis_data:
@@ -116,3 +134,4 @@ volumes:
   minio_data:
   rabbitmq_data:
   es_data:
+  mongo_data:

@@ -7,9 +7,9 @@ python-dotenv==1.0.0
 pymongo==4.3.3
 redis==4.5.5
 pika==1.3.2
-
+faker
 # Auth
-python-keycloak==2.15.0
+python-keycloak
 python-jose==3.3.0
 passlib==1.7.4
 
@@ -22,3 +22,6 @@ elastic-apm==6.23.0
 # Optional (uncomment if needed)
 # gunicorn==20.1.0  # For production
 # httpx==0.24.1     # For async HTTP requests  
+
+pydantic[email]
+python-multipart
