@@ -1,3 +1,4 @@
+// src/utils/auth.js
 export const getAuthToken = () => localStorage.getItem('travel_token');
 export const setAuthToken = (token) => localStorage.setItem('travel_token', token);
 export const clearAuthToken = () => localStorage.removeItem('travel_token');
@@ -12,4 +13,12 @@ export const isAuthenticated = () => {
   } catch {
     return false;
   }
+};
+
+// Add this logout function
+export const logout = () => {
+  clearAuthToken();
+  // Optional: Clear any other user-related data
+  localStorage.removeItem('user');
+  window.location.reload(); // Refresh to reset application state
 };

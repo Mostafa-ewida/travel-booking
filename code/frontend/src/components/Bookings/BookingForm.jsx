@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Button, TextField, Box, MenuItem } from '@mui/material';
+import { 
+  Button, 
+  TextField, 
+  Box, 
+  MenuItem, 
+  Typography  // Added Typography here
+} from '@mui/material';
 import { formatDate } from '../../utils/formatters';
 
 const BookingForm = ({ flight, onSubmit, showNotification }) => {
@@ -24,7 +30,7 @@ const BookingForm = ({ flight, onSubmit, showNotification }) => {
         fullWidth
         label="Passengers"
         value={passengers}
-        onChange={(e) => setPassengers(e.target.value)}
+        onChange={(e) => setPassengers(Number(e.target.value))}  // Added Number() conversion
         sx={{ mb: 2 }}
       >
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (

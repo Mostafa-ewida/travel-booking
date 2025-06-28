@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './styles/theme';
@@ -27,13 +27,13 @@ function App() {
   };
 
   const handleClose = () => {
-    setNotification({ ...notification, open: false });
+    setNotification(prev => ({ ...prev, open: false }));
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <div className="app">
         <Header showNotification={showNotification} />
         <Notification 
           open={notification.open}
@@ -41,40 +41,33 @@ function App() {
           severity={notification.severity}
           onClose={handleClose}
         />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route 
-            path="/login" 
-            element={<LoginPage showNotification={showNotification} />} 
-          />
-          <Route 
-            path="/register" 
-            element={<RegisterPage showNotification={showNotification} />} 
-          />
-          <Route 
-            path="/search" 
-            element={<SearchPage showNotification={showNotification} />} 
-          />
-          <Route
-            path="/bookings"
-            element={
-              <ProtectedRoute>
-                <MyBookings showNotification={showNotification} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/bookings/new"
-            element={
-              <ProtectedRoute>
-                <BookingPage showNotification={showNotification} />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<HomePage showNotification={showNotification} />} />
+            <Route path="/login" element={<LoginPage showNotification={showNotification} />} />
+            <Route path="/register" element={<RegisterPage showNotification={showNotification} />} />
+            <Route path="/search" element={<SearchPage showNotification={showNotification} />} />
+            <Route
+              path="/bookings"
+              element={
+                <ProtectedRoute>
+                  <MyBookings showNotification={showNotification} />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/bookings/new"
+              element={
+                <ProtectedRoute>
+                  <BookingPage showNotification={showNotification} />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
         <Footer />
-      </BrowserRouter>
+      </div>
     </ThemeProvider>
   );
 }

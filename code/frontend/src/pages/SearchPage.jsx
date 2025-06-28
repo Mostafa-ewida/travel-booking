@@ -1,43 +1,31 @@
 import { useState } from 'react';
-import { Container, Grid, Box, CircularProgress } from '@mui/material';
-import SearchFilters from '../../components/Search/Filters';
-import SearchResults from '../../components/Search/Results';
-import { searchFlights } from '../../api/search';
+import { Container, Box } from '@mui/material';
+import Filters from '../components/Search/Filters';
+import Results from '../components/Search/Results';
+import { searchFlights } from '../api/search';
 
 const SearchPage = ({ showNotification }) => {
-  const [results, setResults] = useState([]);
+  const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleSearch = async (filters) => {
-    setLoading(true);
+  const handleSearch = async (searchParams) => {
     try {
-      const data = await searchFlights(filters);
-      setResults(data);
+      setLoading(true);
+      const results = await searchFlights(searchParams);
+      setFlights(results);
     } catch (error) {
-      showNotification('Search failed. Please try again.', 'error');
+      showNotification(error.message || 'Failed to search flights', 'error');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container maxWidth="lg">
-      <Box my={4}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={4}>
-            <SearchFilters onSubmit={handleSearch} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            {loading ? (
-              <Box display="flex" justifyContent="center">
-                <CircularProgress />
-              </Box>
-            ) : (
-              <SearchResults results={results} showNotification={showNotification} />
-            )}
-          </Grid>
-        </Grid>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Box sx={{ mb: 4 }}>
+        <Filters onSearch={handleSearch} loading={loading} />
       </Box>
+      <Results flights={flights} loading={loading} />
     </Container>
   );
 };
