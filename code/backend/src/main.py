@@ -56,7 +56,7 @@ app = FastAPI(
             "description": "Development server"
         },
         {
-            "url": "https://api.travelapi.com",
+            "url": "http://laughing-barnacle-9wgvr7q75qj3p7p9-8000.app.github.dev",
             "description": "Production server"
         }
     ],

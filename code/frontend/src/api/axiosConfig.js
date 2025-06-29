@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { getAuthToken } from '../utils/auth';
+import config from '../config';
 
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: config.REACT_APP_API_URL || 'http://localhost:8000',
 });
 
-console.log("API BASE URL:", process.env.REACT_APP_API_URL);
+console.log("API BASE URL:", config.REACT_APP_API_URL || 'http://localhost:8000');
 
 apiClient.interceptors.request.use((config) => {
   const token = getAuthToken();
