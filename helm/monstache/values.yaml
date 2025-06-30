@@ -88,7 +88,7 @@ env: {}
 
 config:
   monstache-config.yaml: |
-    mongo-url: "mongodb://lclr_user:1th4ok1ymfurQaM9@backend-database-primary:27017,backend-database-secondary-1:27017,backend-database-secondary-2:27017/lclr_db?replicaSet=replicaset"
+    mongo-url: "mongodb://lclr_user:1th4ok1ymfurQaM9@backend-database-headless:27017/lclr_db?replicaSet=replicaset&authSource=lclr_db"
     elasticsearch-urls: ["http://elasticsearch:9200"]
     change-stream-namespaces: ["lclr_db"]
     stdout: true
