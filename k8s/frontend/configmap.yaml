@@ -5,11 +5,12 @@ metadata:
   labels:
     app: frontend
 data:
-  REACT_APP_API_BASE_URL: "http://backend.fullstack-app.svc.cluster.local:8000"
-  REACT_APP_KEYCLOAK_URL: "http://keycloak-http.fullstack-app.svc.cluster.local:8080/auth"
-  REACT_APP_KEYCLOAK_REALM: "myrealm"
-  REACT_APP_KEYCLOAK_CLIENT_ID: "frontend"
-  REACT_APP_ENVIRONMENT: "production"
+  config.js: |
+          const config = {
+            REACT_APP_API_URL: "https://laughing-barnacle-9wgvr7q75qj3p7p9-8000.app.github.dev",
+          };
+
+          export default config;
 
 
   NGINX_CONF: |
