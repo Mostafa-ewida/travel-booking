@@ -66,7 +66,7 @@ hostAliases: []
 #  - "bar.local"
 
 image: "docker.elastic.co/apm/apm-server"
-imageTag: "8.5.1"
+imageTag: "7.17.9"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
 

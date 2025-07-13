@@ -8,3 +8,7 @@ kubectl create secret tls travel-booking-wildcard-tls \
   --key wildcard.key \
   --cert wildcard.crt \
   --namespace=default
+
+
+kubectl create secret tls travel-booking-wildcard-tls   --key wildcard.key   --cert wildcard.crt   --namespace=rook-ceph
+kubectl create secret tls travel-booking-wildcard-tls   --key wildcard.key   --cert wildcard.crt   --namespace=mostafa

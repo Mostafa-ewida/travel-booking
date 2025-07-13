@@ -1,0 +1,61 @@
+---
+# opbeans-java-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opbeans-java
+  labels:
+    app: opbeans-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: opbeans-java
+  template:
+    metadata:
+      labels:
+        app: opbeans-java
+    spec:
+      containers:
+      - name: opbeans-java
+        image:  mostafaewida/mostafa-beans:latest   
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ELASTIC_APM_SERVICE_NAME
+          value: "opbeans-java"
+        - name: ELASTIC_APM_SERVER_URL
+          value: "http://apm-server-apm-server:8200" # Update with your APM server URL
+        - name: ELASTIC_APM_APPLICATION_PACKAGES
+          value: "co.elastic.apm.opbeans"
+        - name: ELASTIC_APM_JS_SERVER_URL
+          value: "http://apm-server-apm-server:8200" # Update with your APM server URL
+        - name: OPBEANS_SERVER_PORT
+          value: "8000"
+        - name: ELASTIC_APM_ENABLE_LOG_CORRELATION
+          value: "true"
+        - name: ELASTIC_APM_ENVIRONMENT
+          value: "production"
+        - name: APM_AGENT_TYPE
+          value: "elasticapm"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+---
+# opbeans-java-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: opbeans-java
+spec:
+  type: ClusterIP
+  selector:
+    app: opbeans-java
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

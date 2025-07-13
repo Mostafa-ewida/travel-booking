@@ -10,6 +10,7 @@ spec:
     - travel-booking.com
     - app.travel-booking.com
     - api.travel-booking.com
+    - beans.travel-booking.com
     secretName: travel-booking-wildcard-tls
   rules:
   - host: travel-booking.com
@@ -42,5 +43,16 @@ spec:
         backend:
           service:
             name: backend
+            port:
+              number: 8000
+
+  - host: beans.travel-booking.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: opbeans-java
             port:
               number: 8000

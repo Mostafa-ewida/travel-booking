@@ -19,7 +19,7 @@ global:
   ##   - myRegistryKeySecretName
   ##
   imagePullSecrets: []
-  defaultStorageClass: ""
+  defaultStorageClass: "rook-cephfs"
   storageClass: ""
   ## Security parameters
   ##
