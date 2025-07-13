@@ -1,9 +1,9 @@
-<INGRESS_IP> travel-booking.com
-<INGRESS_IP> app.travel-booking.com
-<INGRESS_IP> api.travel-booking.com
-<INGRESS_IP> monitor.travel-booking.com
-<INGRESS_IP> grafana.travel-booking.com
-<INGRESS_IP> storage.travel-booking.com
-<INGRESS_IP> auth.travel-booking.com
-<INGRESS_IP> logs.travel-booking.com
-<INGRESS_IP> kibana.travel-booking.com
+	<INGRESS_IP> prometheus.travel-booking.com
+	<INGRESS_IP> grafana.travel-booking.com
+	<INGRESS_IP> storage.travel-booking.com
+	<INGRESS_IP> auth.travel-booking.com
+	<INGRESS_IP> elastic.travel-booking.com
+	<INGRESS_IP> kibana.travel-booking.com
+	<INGRESS_IP> apm.travel-booking.com
+	<INGRESS_IP> ceph.travel-booking.com
+	<INGRESS_IP> beans.travel-booking.com

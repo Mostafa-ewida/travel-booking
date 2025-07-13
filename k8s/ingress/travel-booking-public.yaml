@@ -7,44 +7,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - travel-booking.com
-    - app.travel-booking.com
-    - api.travel-booking.com
     - beans.travel-booking.com
     secretName: travel-booking-wildcard-tls
   rules:
-  - host: travel-booking.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: frontend
-            port:
-              number: 80
-  
-  - host: app.travel-booking.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: frontend
-            port:
-              number: 80
-  
-  - host: api.travel-booking.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: backend
-            port:
-              number: 8000
+
 
   - host: beans.travel-booking.com
     http:

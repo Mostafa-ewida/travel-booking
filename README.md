@@ -57,3 +57,11 @@ chmod +x helm/install.sh \
 kubectl apply -f k8s/opbeans/deployment.yaml
 ```
 
+
+### install ingress must have nginx ingress installed 
+
+```bash
+kubectl apply -f k8s/ingress 2>/dev/null \
+kubectl apply -f k8s/rook-ceph/ceph-ingress.yaml 
+
+```
