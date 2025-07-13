@@ -65,3 +65,17 @@ kubectl apply -f k8s/ingress 2>/dev/null \
 kubectl apply -f k8s/rook-ceph/ceph-ingress.yaml 
 
 ```
+
+### change the /etc/hosts file to accommodate these changes 
+
+```bash
+	<INGRESS_IP> prometheus.travel-booking.com
+	<INGRESS_IP> grafana.travel-booking.com
+	<INGRESS_IP> storage.travel-booking.com
+	<INGRESS_IP> auth.travel-booking.com
+	<INGRESS_IP> elastic.travel-booking.com
+	<INGRESS_IP> kibana.travel-booking.com
+	<INGRESS_IP> apm.travel-booking.com
+	<INGRESS_IP> ceph.travel-booking.com
+	<INGRESS_IP> beans.travel-booking.com
+```
