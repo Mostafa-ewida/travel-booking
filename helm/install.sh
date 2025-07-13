@@ -14,8 +14,8 @@ echo "Installing all components in current namespace: $CURRENT_NS"
 
 # Install all charts using local values.yaml files
 helm upgrade --install apm-server apm-server -f ./apm-server/values.yaml
-helm upgrade --install elasticsearch elasticsearch -f ./elasticsearch/values.yaml
-helm upgrade --install kibana kibana -f ./kibana/values.yaml
+helm upgrade --install elasticsearch elastic/elasticsearch -f ./elasticsearch/values.yaml
+helm upgrade --install kibana elastic/kibana -f ./kibana/values.yaml
 helm upgrade --install keycloak keycloak -f ./keycloak/values.yaml
 helm upgrade --install prometheus-stack kube-prometheus-stack -f ./kube-prometheus-stack/values.yaml
 helm upgrade --install minio minio -f ./minio/values.yaml
